@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :page do
-    name "MyString"
-    permalink 1
+    association :subject
+    name "An associated Page"
+    permalink { Faker::Number.digit }
     position 1
     visible false
   end

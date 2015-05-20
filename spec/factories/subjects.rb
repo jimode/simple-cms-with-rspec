@@ -2,6 +2,20 @@
 
 FactoryGirl.define do
   factory :subject do
-    name "MyString"
+    name { Faker::Lorem.word }
+    position { Faker::Number.digit }
+    visible "true"
+    
+    factory :subject_with_pages do
+      after(:create) do |subject|
+        create(:page, subject: subject)
+      end
+    end
+    
+    factory :invalid_subject do
+      name nil
+      position { Faker::Number.digit }
+      visible "false"
+    end
   end
 end
