@@ -4,18 +4,19 @@ describe SubjectsController do
   # let(:subjects) { Subject.all }
    
   describe 'GET #index' do
-    xit "assigns all subjects to @subjects sorted in an ascending order" do
+    it "assigns all subjects to @subjects sorted in an ascending order" do
      subject1 = create(:subject) 
      subject2 = create(:subject)
      get :index
      
-    expect(assigns(:subjects)).to match_array([subject1, subject2])
+    expect(assigns(:subjects)).to include(subject1, subject2)
+    expect(response).to be_success
     end
     
     it "renders the :index template" do
       get :index, @subjects
       
-      expect(response). to render_template(:index)
+      expect(response).to render_template(:index)
     end
   end
   
@@ -100,6 +101,24 @@ describe SubjectsController do
       end
     end
   end
+  
+  describe 'DELETE #destroy' do
+    before :each do
+      @subject = create(:subject)
+    end
+    
+    it "deletes the subject" do
+      expect{
+        delete :destroy, id: @subject
+      }.to change(Subject, :count).by(-1)
+    end
+    
+    it "redirects to subjects#index" do
+      delete :destroy, id: @subject
+      expect(response).to redirect_to 'http://test.host/subjects'
+    end
+  end
+  
   
 end
 
