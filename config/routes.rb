@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
   
+  get 'pages/index'
+
+  get 'pages/new'
+
+  get 'pages/create'
+
+  get 'pages/edit'
+
+  get 'pages/update'
+
+  get 'pages/delete'
+
+  get 'pages/destroy'
+
   root "demo#index"
   
   #get "demo/index"
