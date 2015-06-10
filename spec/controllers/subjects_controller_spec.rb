@@ -69,10 +69,10 @@ describe SubjectsController do
         }.to change(Subject, :count).by(1)
       end
       
-      xit "redirects to subjects#show" do
+      it "redirects to subjects#index" do
         post :create, subject: attributes_for(:subject)
         # expect(response).to redirect_to("http://test.host/subjects")
-        expect(response).to redirect_to subject_path(assigns[:subject])
+        expect(response).to redirect_to 'http://test.host/subjects'
       end
     end
   end

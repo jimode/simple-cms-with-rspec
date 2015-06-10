@@ -46,7 +46,34 @@ describe PagesController do
     end
   end
   
-  # Start with #edit controller
+  describe 'GET #edit' do
+    it "assigns the requested page to @page" do
+      page = create(:page)
+      get :edit, id: page
+      expect(assigns(:page)).to eq(page)
+    end
+    
+    it "renders the :edit template" do
+      page = create(:page)
+      get :edit, id: page
+      expect(response).to render_template(:edit)
+    end
+  end
+  
+  describe 'POST #create' do
+    context "with valid attributes" do
+      it "save the new page into the database" do
+        expect{
+          post :create, page: attributes_for(:page)
+          }.to change(Page, :count).by(1)
+      end
+      
+      it "redirects to page#index" do
+        post :create, page: attributes_for(:page)
+        expect(response).to redirect_to 'http://test.host/pages/index'
+      end
+    end
+  end
   
 end
 
