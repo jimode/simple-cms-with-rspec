@@ -70,8 +70,38 @@ describe PagesController do
       
       it "redirects to page#index" do
         post :create, page: attributes_for(:page)
-        expect(response).to redirect_to 'http://test.host/pages/index'
+        expect(response).to redirect_to 'http://test.host/pages'
       end
+    end
+  end
+  
+  describe 'PATCH #update' do
+    before :each do
+      @page = create(:page)
+    end
+    
+    context "valid attributes" do
+      it "locates the requested @page" do
+        patch :update, id: @page, page: attributes_for(:page)
+        expect(assigns(:page)).to eq(@page)
+      end
+    end
+  end
+  
+  describe 'DELETE #destroy' do
+    before :each do
+      @page = create(:page)
+    end
+    
+    it "deletes the page" do
+      expect{
+        delete :destroy, id: @page
+      }.to change(Page, :count).by(-1)
+    end
+    
+    it "redirects to pages#index" do
+      delete :destroy, id: @page
+      expect(response).to redirect_to 'http://test.host/pages'
     end
   end
   

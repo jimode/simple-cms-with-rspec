@@ -14,6 +14,7 @@ class PagesController < ApplicationController
   def create
     @page = Page.new(page_params)
     if @page.save
+      flash[:notice] = "Page created successfully."
       redirect_to(:action => 'index')
     else
       render('new')
@@ -24,19 +25,29 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
   end
 
-  # Start with the PATCH request
   def update
+    @page = Page.find(params[:id])
+    if @page.update_attributes(page_params)
+      flash[:notice] = "Page updated successfully."
+      redirect_to(:action => 'show', :id => @page.id)
+    else
+      render('edit')
+    end
   end
 
   def delete
+    @page = Page.find(params[:id])
   end
 
   def destroy
+    page = Page.find(params[:id]).destroy
+    flash[:notice] = "Page destroyed successfully."
+    redirect_to(:action => 'index')
   end
   
   private
   
     def page_params
-      params.require(:page).permit(:name, :permalink, :position, :visible)
+      params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
     end
 end
